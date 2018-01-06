@@ -1,3 +1,3 @@
 # LED strip controller
 
-LED strip controller with PIR sensor (passive infrared sensor)
+LED strip controller with PIR sensor (passive infrared sensor) for Arduino.
