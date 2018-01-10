@@ -11,11 +11,11 @@
 #define LED_PIN 9
 
 #define FADE_STEP_VALUE 1
-#define LOOP_DELAY 7
+#define LOOP_DELAY 10
 #define MIN_STEP_DELAY 60
 
 #define HIGH_FADE_VALUE 255
-#define THRESHOLD_FADE_VALUE 30
+#define THRESHOLD_FADE_VALUE 20
 #define LOW_FADE_VALUE 0
 
 // 2 minutes: 1000 * 60 * 2 = 120000
