@@ -15,7 +15,7 @@
 #define MIN_STEP_DELAY 60
 
 #define HIGH_FADE_VALUE 255
-#define THRESHOLD_FADE_VALUE 20
+#define THRESHOLD_FADE_VALUE 18
 #define LOW_FADE_VALUE 0
 
 // 2 minutes: 1000 * 60 * 2 = 120000
@@ -48,6 +48,8 @@ void loop() {
   if (pirValue == HIGH && fadeValue < HIGH_FADE_VALUE) {
     // Fade IN
     fadeValue = fadeIn(fadeValue);
+    // Performance delay reset to FULL
+    performanceDelay = STAY_ON_FULL_PERFORMANCE + STAY_ON_HALF_PERFORMANCE;
   }
   
   else if (pirValue == HIGH && fadeValue >= HIGH_FADE_VALUE) {
