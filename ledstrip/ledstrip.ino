@@ -10,19 +10,21 @@
 // LED connected to digital pin 9
 #define LED_PIN 9
 
-#define FADE_STEP_VALUE 1
+#define FADE_IN_STEP_VALUE 2
+#define FADE_OUT_STEP_VALUE 1
 #define LOOP_DELAY 10
 #define MIN_STEP_DELAY 60
 
 #define HIGH_FADE_VALUE 255
-#define THRESHOLD_FADE_VALUE 18
+#define THRESHOLD_FADE_VALUE 16
 #define LOW_FADE_VALUE 0
 
 // 2 minutes: 1000 * 60 * 2 = 120000
 #define STAY_ON_FULL_PERFORMANCE 120000
 
 // 90 minutes: 1000 * 60 * 90 = 5400000
-#define STAY_ON_HALF_PERFORMANCE 5400000
+// 60 minutes: 1000 * 60 * 60 = 3600000
+#define STAY_ON_HALF_PERFORMANCE 3600000
 
 
 int pirValue;
@@ -66,7 +68,7 @@ void loop() {
 
   else if (pirValue == LOW && fadeValue > THRESHOLD_FADE_VALUE && performanceDelay <= STAY_ON_HALF_PERFORMANCE) {
     // Fade OUT 1
-    fadeValue = fadeStep(fadeValue, FADE_STEP_VALUE * (-1));
+    fadeValue = fadeStep(fadeValue, FADE_OUT_STEP_VALUE * (-1));
   }
 
   else if (pirValue == LOW && fadeValue == THRESHOLD_FADE_VALUE && performanceDelay > 0) {
@@ -77,7 +79,7 @@ void loop() {
 
   else if (pirValue == LOW && fadeValue <= THRESHOLD_FADE_VALUE && fadeValue > 0 && performanceDelay <= 0) {
     // Fade OUT 2
-    fadeValue = fadeStep(fadeValue, FADE_STEP_VALUE * (-1));
+    fadeValue = fadeStep(fadeValue, FADE_OUT_STEP_VALUE * (-1));
   }
 
   else {
@@ -95,7 +97,7 @@ int fadeStep(int currentFadeVal, int stepVal) {
   if (fadeVal > HIGH_FADE_VALUE) {fadeVal = HIGH_FADE_VALUE;}
 
   int diffVal = fadeVal - THRESHOLD_FADE_VALUE;
-  if (diffVal < 0 && abs(diffVal) < FADE_STEP_VALUE) {
+  if (diffVal < 0 && abs(diffVal) < FADE_OUT_STEP_VALUE) {
     fadeVal = THRESHOLD_FADE_VALUE;
   }
 
@@ -116,7 +118,7 @@ int fadeIn(int currentFadeVal) {
   // fade in to max value in increments of 1 points:
   analogWrite(LED_PIN, currentFadeVal);
   while (currentFadeVal < HIGH_FADE_VALUE) {
-    currentFadeVal = fadeStep(currentFadeVal, FADE_STEP_VALUE);
+    currentFadeVal = fadeStep(currentFadeVal, FADE_IN_STEP_VALUE);
   }
   return currentFadeVal;
 }
